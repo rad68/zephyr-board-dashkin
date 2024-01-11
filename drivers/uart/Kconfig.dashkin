@@ -1,0 +1,12 @@
+# Dashkin UART configuration
+
+# Copyright (c) 2023 Dashkin Ruslan
+
+config UART_DASHKIN
+	bool "DASHKIN UART"
+	default y
+	depends on DT_HAS_DASHKIN_UART_ENABLED
+	select SERIAL_HAS_DRIVER
+	select SERIAL_SUPPORT_INTERRUPT
+	help
+	  This option enables the UART driver for the DASHKIN.

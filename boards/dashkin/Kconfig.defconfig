@@ -1,0 +1,6 @@
+if BOARD_DASHKIN
+
+config BOARD
+	default "dashkin"
+
+endif # BOARD_DASHKIN

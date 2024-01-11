@@ -1,0 +1,80 @@
+/*
+ * Copyright (c) 2023 Dashkin Ruslan
+ *
+ */
+
+/dts-v1/;
+
+#include <skeleton.dtsi>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+
+/ {
+  cpus {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    cpu0: cpu@0 {
+      compatible = "dashkin-cpu";
+      device_type = "cpu";
+      reg = <0>;
+      riscv,isa = "rv32imc";
+      status = "okay";
+
+      intc: interrupt-controller {
+        compatible = "riscv,cpu-intc";
+        #address-cells = <0>;
+        #interrupt-cells = <1>;
+        interrupt-controller;
+      };
+    };
+  };
+
+  soc {
+    compatible = "dashkin";
+    interrupt-parent = <&intc>;
+    #address-cells = <1>;
+    #size-cells = <1>;
+    ranges;
+
+    clint: clint@20000 {
+      compatible = "dashkin-machine-timer";
+      reg = <0x00020000 0x10>;
+      interrupts = <7>;
+      interrupts-extended = <&intc 7>;
+    };
+
+    plic: interrupt-controller@1000000 {
+      compatible = "sifive,plic-1.0.0";
+      #address-cells = <0>;
+      #interrupt-cells = <2>;
+      interrupt-controller;
+      interrupts-extended = <&intc 11>;
+      reg = <0x01000000 0x00002000
+             0x01002000 0x001fe000
+             0x01200000 0x03e00000>;
+      reg-names = "prio", "irq_en", "reg";
+      riscv,max-priority = <10>;
+      riscv,ndev = <10>;
+    };
+
+    gpio0: gpio@10000 {
+      compatible = "dashkin-gpio";
+      gpio-controller;
+      status = "disabled";
+      reg = <0x00010000 0x4>;
+      interrupt-parent = <&plic>;
+      interrupts = <3 2>,<4 3>,<5 4>,<6 5>,<7 6>,<8 7>,<9 8>,<10 9>;
+      ngpios = <8>;
+      #gpio-cells = <2>;
+    };
+
+    uart0: serial@11000 {
+      compatible = "dashkin-uart";
+      status = "disabled";
+      reg = <0x00011000 0x14>;
+      interrupt-parent = <&plic>;
+      interrupts = <1 1>, <2 1>;
+      interrupt-names = "RX", "TX";
+    };
+  };
+};

@@ -1,0 +1,37 @@
+if SOC_SERIES_DASHKIN
+
+config SOC_SERIES
+	default "dashkin"
+
+config SYS_CLOCK_HW_CYCLES_PER_SEC
+#  default $(dt_node_int_prop_int,/cpus/cpu@0,clock-frequency)
+  default 1
+
+config RISCV_SOC_INTERRUPT_INIT
+  default y
+
+config RISCV_HAS_CPU_IDLE
+	default n
+
+config RISCV_HAS_PLIC
+	default y
+
+config RISCV_GP
+	default y
+
+config 2ND_LVL_ISR_TBL_OFFSET #ISR Table offset to the first IRQ in PLIC
+	default 12
+
+config 2ND_LVL_INTR_00_OFFSET #IRQ number in the 1st level to which 2nd level controller maps
+	default 11
+
+config MAX_IRQ_PER_AGGREGATOR #Number of IRQ in PLIC
+	default 50
+
+config NUM_IRQS #First 16 IRQs are CPU exceptions
+	default 25
+
+config SYSCON
+	default n
+
+endif #SOC_SERIES_DASHKIN

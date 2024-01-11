@@ -1,0 +1,3 @@
+config BOARD_DASHKIN
+	bool "DASHKIN Processor"
+	depends on SOC_SERIES_DASHKIN

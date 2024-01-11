@@ -1,0 +1,5 @@
+config SOC_SERIES_DASHKIN
+	bool "DASHKIN Processor"
+	select RISCV
+  select SOC_FAMILY_RISCV_PRIVILEGED
+

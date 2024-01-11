@@ -1,0 +1,6 @@
+config GPIO_DASHKIN
+	bool "DASHKIN GPIO driver"
+	default y
+	depends on DT_HAS_DASHKIN_GPIO_ENABLED
+	help
+	  Enable DASHKIN GPIO driver.

@@ -1,0 +1,20 @@
+choice
+	prompt "DASHKIN"
+	depends on SOC_SERIES_DASHKIN
+
+config SOC_DASHKIN
+  bool "SoC DASHKIN"
+	select RISCV_ISA_RV32I
+	select RISCV_ISA_EXT_M
+	select RISCV_ISA_EXT_C
+	select RISCV_ISA_EXT_ZICSR
+	select ATOMIC_OPERATIONS_C
+	help
+	  Enable support for the DASHKIN Processor (SoC).
+
+	  The DASHKIN CPU implementation must have the following RISC-V ISA
+	  extensions enabled in order to support Zephyr:
+	  - M (Integer Multiplication and Division)
+	  - Zicsr (Control and Status Register (CSR) Instructions)
+
+endchoice
